@@ -1,0 +1,36 @@
+{
+  "size": 1,
+  "query": {
+    "bool": {
+      "must": [{
+        "match": {
+          "USER_INSTANCE_DISTRIBUTION_USER_ID": "{0}"
+        }
+      }]
+    }
+  },
+  "aggs": {
+    "cycle_id": {
+      "terms": {
+        "field": "USER_INSTANCE_DISTRIBUTION_CYCLE_ID",
+        "size": "{1}"
+      },
+      "aggs": {
+        "cycle_name": {
+          "terms": {
+            "field": "CYCLE_NAME",
+            "size": "{2}"
+          },
+          "aggs": {
+            "instance_id": {
+              "terms": {
+                "field": "USER_INSTANCE_DISTRIBUTION_INSTANCE_ID",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
